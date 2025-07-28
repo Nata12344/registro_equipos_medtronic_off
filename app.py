@@ -49,6 +49,10 @@ if "tipo_operacion" not in st.session_state:
     st.session_state.tipo_operacion = "Ingreso"
 if "equipos" not in st.session_state:
     st.session_state.equipos = []
+if "cliente" not in st.session_state:
+    st.session_state.cliente = ""
+if "movimiento" not in st.session_state:
+    st.session_state.movimiento = ""
 
 # SIDEBAR: logo + ingreso/salida
 with st.sidebar:
@@ -68,12 +72,12 @@ st.markdown(f'<p class="title">{st.session_state.tipo_operacion} - Registro de e
 
 # Información general
 st.markdown("#### Información general")
-cliente = st.text_input("Cliente:", value=st.session_state.get("cliente", ""))
+cliente = st.text_input("Cliente:", value=st.session_state.cliente)
 ingeniero = st.selectbox("Ingeniero:", list(correos_ingenieros.keys()), index=0)
-movimiento = st.text_input("Movimiento / Delivery:", value=st.session_state.get("movimiento", ""))
+movimiento = st.text_input("Movimiento / Delivery:", value=st.session_state.movimiento)
 
-st.session_state["cliente"] = cliente
-st.session_state["movimiento"] = movimiento
+st.session_state.cliente = cliente
+st.session_state.movimiento = movimiento
 
 # Equipos
 st.divider()
@@ -86,14 +90,9 @@ equipos_a_eliminar = []
 
 for idx, equipo in enumerate(st.session_state.equipos):
     with st.expander(f"Equipo {idx + 1}", expanded=True):
-        col_eq1, col_eq2 = st.columns([4, 1])
-        with col_eq1:
-            tipo = st.selectbox(f"Tipo de equipo {idx + 1}:", ["WEM", "ForceTriad", "FX", "PB840", "PB980", "BIS VISTA", "CONSOLA DE CAMARA"], key=f"tipo_{idx}")
-            serial = st.text_input("Serial:", key=f"serial_{idx}")
-            accesorios = st.text_input("Accesorios:", key=f"accesorios_{idx}")
-        with col_eq2:
-            if st.button(f"❌ Eliminar equipo {idx + 1}", key=f"eliminar_{idx}"):
-                equipos_a_eliminar.append(idx)
+        tipo = st.selectbox(f"Tipo de equipo {idx + 1}:", ["WEM", "ForceTriad", "FX", "PB840", "PB980", "BIS VISTA", "CONSOLA DE CAMARA"], key=f"tipo_{idx}")
+        serial = st.text_input("Serial:", key=f"serial_{idx}")
+        accesorios = st.text_input("Accesorios:", key=f"accesorios_{idx}")
 
         st.markdown("**Observaciones físicas:**")
         observaciones = []
@@ -123,12 +122,17 @@ for idx, equipo in enumerate(st.session_state.equipos):
             "fotos": fotos
         })
 
+        st.markdown("---")
+        if st.button(f"❌ Eliminar equipo {idx + 1}", key=f"eliminar_{idx}"):
+            equipos_a_eliminar.append(idx)
+
+# Eliminar equipos marcados
 if equipos_a_eliminar:
     for i in sorted(equipos_a_eliminar, reverse=True):
         del st.session_state.equipos[i]
     st.experimental_rerun()
 
-# Enviar
+# Enviar correo
 st.divider()
 if st.button("Enviar"):
     if not cliente or not ingeniero or not movimiento:
