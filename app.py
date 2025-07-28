@@ -130,7 +130,7 @@ for idx, equipo in enumerate(st.session_state.equipos):
 if equipos_a_eliminar:
     for i in sorted(equipos_a_eliminar, reverse=True):
         del st.session_state.equipos[i]
-    st.experimental_rerun()
+    st.rerun()
 
 # Enviar correo
 st.divider()
