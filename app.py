@@ -5,6 +5,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 import os
+import base64
 
 # Configuración de página
 st.set_page_config(page_title="Registro Medtronic", layout="centered", page_icon="🩺")
@@ -66,6 +67,16 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("### ¿Qué deseas registrar?")
     st.session_state.tipo_operacion = st.radio("Tipo de operación:", ["Ingreso", "Salida"])
+
+
+# Convertir imagen a base64
+def cargar_logo_base64(ruta_logo):
+    with open(ruta_logo, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode("utf-8")
+
+# Cargar logo
+logo_base64 = cargar_logo_base64("logo_medtronic.png")
+
 
 # TÍTULO CENTRAL
 # ENCABEZADO AZUL CON LOGO Y TÍTULO
