@@ -72,7 +72,7 @@ with st.sidebar:
 st.markdown("""
     <div style="background-color: #003087; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
         <div style="display: flex; align-items: center; gap: 20px;">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Medtronic_logo.svg/320px-Medtronic_logo.svg.png" width="80">
+            <img src="logo_medtronic.png" width="80">
             <div>
                 <p style="color: white; margin: 0; font-weight: 500; font-size: 16px;">
                     {tipo_operacion} – Registro de Equipos
