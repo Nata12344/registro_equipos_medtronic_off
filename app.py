@@ -4,90 +4,70 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
+import base64
 import os
-
-# Configuración de página
-st.set_page_config(page_title="Registro Medtronic", layout="centered", page_icon="🩺")
-
-# Estilo visual
-st.markdown("""
-    <style>
-    .stApp {
-        background-color: white;
-    }
-    .title {
-        text-align: center;
-        font-size: 22px;
-        color: #000000;
-        font-family: 'Arial', sans-serif;
-        margin-top: 20px;
-        margin-bottom: 30px;
-    }
-    .stButton>button {
-        width: 200px;
-        height: 40px;
-        background-color: #002d5d;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        margin: auto;
-        display: block;
-    }
-    .stButton>button:hover {
-        background-color: #0053a6;
-    }
-    </style>
-""", unsafe_allow_html=True)
 
 # Datos iniciales
 correos_ingenieros = {
     "Nicolle Riaño": "nicolle.n.riano@medtronic.com"
 }
 
-# Estados iniciales
-if "tipo_operacion" not in st.session_state:
-    st.session_state.tipo_operacion = "Ingreso"
+st.set_page_config(page_title="Registro de Equipos", layout="wide")
+
+st.markdown("""
+    <style>
+        .encabezado {
+            background-color: #003A70;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .encabezado h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+        .encabezado p {
+            margin: 0;
+            font-size: 16px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+with st.container():
+    st.markdown('<div class="encabezado"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Medtronic_logo.svg/2560px-Medtronic_logo.svg.png" width="200"/><h1>Registro de Equipos</h1><p>Información confidencial - Uso exclusivo de Medtronic</p></div>', unsafe_allow_html=True)
+
+st.sidebar.title("Menú")
+st.sidebar.write("Selecciona la opción deseada")
+
+# Inicializar variables de sesión
 if "equipos" not in st.session_state:
     st.session_state.equipos = []
-if "cliente" not in st.session_state:
-    st.session_state.cliente = ""
-if "movimiento" not in st.session_state:
-    st.session_state.movimiento = ""
-
-# SIDEBAR: logo + ingreso/salida
-with st.sidebar:
-    try:
-        logo = Image.open("logo_medtronic.png")
-        st.image(logo, width=150)
-    except:
-        st.warning("No se pudo cargar el logo.")
-
-    st.markdown("**Información confidencial - uso exclusivo de Medtronic**", unsafe_allow_html=True)
-    st.markdown("---")
-    st.markdown("### ¿Qué deseas registrar?")
-    st.session_state.tipo_operacion = st.radio("Tipo de operación:", ["Ingreso", "Salida"])
-
-# TÍTULO CENTRAL
-st.markdown(f'<p class="title">{st.session_state.tipo_operacion} - Registro de equipos</p>', unsafe_allow_html=True)
 
 # Información general
-st.markdown("#### Información general")
-cliente = st.text_input("Cliente:", value=st.session_state.cliente)
-ingeniero = st.selectbox("Ingeniero:", list(correos_ingenieros.keys()), index=0)
-movimiento = st.text_input("Movimiento / Delivery:", value=st.session_state.movimiento)
+st.subheader("Información General")
+st.session_state.tipo_operacion = st.selectbox("Tipo de operación:", ["Ingreso", "Salida"], key="tipo_operacion")
+cliente = st.text_input("Cliente:")
+ingeniero = st.selectbox("Ingeniero responsable:", list(correos_ingenieros.keys()))
+correo_destino = correos_ingenieros[ingeniero]
 
-st.session_state.cliente = cliente
-st.session_state.movimiento = movimiento
+# Registro de equipos
+st.subheader("Equipos")
 
-# Equipos
-st.divider()
-st.markdown("### Equipos registrados")
+if st.button("➕ Agregar equipo"):
+    st.session_state.equipos.append({
+        "tipo": "",
+        "serial": "",
+        "accesorios": "",
+        "observaciones": [],
+        "formas": [],
+        "fotos": []
+    })
 
-if st.button("Agregar equipo"):
-    st.session_state.equipos.append({})
-
+# Lista de índices a eliminar
 equipos_a_eliminar = []
 
+# Mostrar cada equipo
 for idx, equipo in enumerate(st.session_state.equipos):
     with st.expander(f"Equipo {idx + 1}", expanded=True):
         tipo = st.selectbox(f"Tipo de equipo {idx + 1}:", ["WEM", "ForceTriad", "FX", "PB840", "PB980", "BIS VISTA", "CONSOLA DE CAMARA"], key=f"tipo_{idx}")
@@ -126,90 +106,14 @@ for idx, equipo in enumerate(st.session_state.equipos):
         if st.button(f"❌ Eliminar equipo {idx + 1}", key=f"eliminar_{idx}"):
             equipos_a_eliminar.append(idx)
 
-# Eliminar equipos marcados
-if equipos_a_eliminar:
-    for i in sorted(equipos_a_eliminar, reverse=True):
-        del st.session_state.equipos[i]
-    st.experimental_rerun()
+# Eliminar equipos después de recorrer
+for idx in sorted(equipos_a_eliminar, reverse=True):
+    del st.session_state.equipos[idx]
 
-# Enviar correo
-st.divider()
-if st.button("Enviar"):
-    if not cliente or not ingeniero or not movimiento:
-        st.error("Por favor completa todos los campos generales.")
-    else:
-        for idx, eq in enumerate(st.session_state.equipos):
-            if not eq.get("fotos") or len(eq["fotos"]) < 4:
-                st.error(f"El equipo {idx + 1} debe tener al menos 4 fotos.")
-                st.stop()
+# Envío del correo (ejemplo)
+if st.button("📤 Enviar información"):
+    st.success("Correo enviado exitosamente (simulado).")
 
-        try:
-            from_email = "rianonicolle1101@gmail.com"
-            password = "pmfb qjwu rnyc bojy"
-            smtp_server = "smtp.gmail.com"
-            smtp_port = 587
-            correo_destino = correos_ingenieros.get(ingeniero)
-            correo_fijo = "mejiah5@medtronic.com"
-
-            msg = MIMEMultipart('related')
-            msg["From"] = from_email
-            msg["To"] = f"{correo_destino}, {correo_fijo}"
-            msg["Subject"] = f"{st.session_state.tipo_operacion} ST - Movimiento/Delivery: {movimiento}"
-
-            html = f"""<html><body>
-            <p><b>{'Ingreso a Servicio Técnico' if st.session_state.tipo_operacion == 'Ingreso' else 'Salida de Servicio Técnico'}</b></p>
-            <p><b>Cliente:</b> {cliente}<br>
-            <b>Ingeniero:</b> {ingeniero}<br>
-            <b>Movimiento / Delivery:</b> {movimiento}</p>
-            <p><b>Equipos registrados:</b></p>
-            """
-
-            img_cids = []
-            img_index = 0
-
-            for idx, eq in enumerate(st.session_state.equipos):
-                obs = ", ".join(eq.get("observaciones", [])) or "Ninguna"
-                formas = ", ".join(eq.get("formas", [])) or "No especificada"
-                fotos = eq.get("fotos", [])
-
-                html += f"""<p><b>Equipo {idx + 1}:</b><br>
-                <b>- Tipo:</b> {eq['tipo']}<br>
-                <b>- Serial:</b> {eq['serial']}<br>
-                <b>- Accesorios:</b> {eq['accesorios']}<br>
-                <b>- Observaciones físicas:</b> {obs}<br>
-                <b>- Forma de {'llegada' if st.session_state.tipo_operacion == 'Ingreso' else 'salida'}:</b> {formas}<br>
-                <b>- Número de fotos:</b> {len(fotos)}</p>"""
-
-                for foto in fotos:
-                    cid = f"image{img_index}"
-                    img_index += 1
-                    img_cids.append((foto, cid))
-                    html += f'<img src="cid:{cid}" style="max-width:400px;"><br>'
-
-            html += """<p style="font-style: italic; color: #555; font-size: 12px; margin-top: 30px; border-top: 1px solid #ccc; padding-top: 10px;">
-            Este mensaje ha sido generado automáticamente por el Departamento de Servicio Técnico de <b>Medtronic</b>.</p></body></html>"""
-
-            msg.attach(MIMEText(html, "html"))
-
-            for foto, cid in img_cids:
-                img = MIMEImage(foto.read())
-                img.add_header("Content-ID", f"<{cid}>")
-                img.add_header("Content-Disposition", "inline", filename=foto.name)
-                msg.attach(img)
-
-            server = smtplib.SMTP(smtp_server, smtp_port)
-            server.starttls()
-            server.login(from_email, password)
-            server.send_message(msg)
-            server.quit()
-
-            st.success("Correo enviado correctamente.")
-            st.session_state.equipos = []
-            st.session_state.cliente = ""
-            st.session_state.movimiento = ""
-
-        except Exception as e:
-            st.error(f"No se pudo enviar el correo: {e}")
 
 
 
