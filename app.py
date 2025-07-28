@@ -74,7 +74,7 @@ st.markdown("""
         <div style="display: flex; align-items: center; gap: 20px;">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Medtronic_logo.svg/320px-Medtronic_logo.svg.png" width="80">
             <div>
-                <p style="color: white; margin: 0; font-weight: 300; font-size: 16px;">
+                <p style="color: white; margin: 0; font-weight: 500; font-size: 16px;">
                     {tipo_operacion} – Registro de Equipos
                 </p>
                 <p style="color: white; font-size: 12px; margin: 0; font-weight: 300;">
