@@ -71,8 +71,8 @@ with st.sidebar:
 # ENCABEZADO AZUL CON LOGO Y TÍTULO
 st.markdown("""
     <div style="background-color: #003087; padding: 15px; border-radius: 8px; display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
-        <img src="logo_medtronic.png" width="90">
-        <h2 style="color: white; margin: 0;">{tipo_operacion} – Registro de Equipos</h2>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Medtronic_logo.svg/320px-Medtronic_logo.svg.png" width="80">
+        <h5 style="color: white; margin: 0;">{tipo_operacion} – Registro de Equipos</h5>
     </div>
 """.format(tipo_operacion=st.session_state.tipo_operacion), unsafe_allow_html=True)
 
