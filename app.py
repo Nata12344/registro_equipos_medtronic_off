@@ -70,9 +70,16 @@ with st.sidebar:
 # TÍTULO CENTRAL
 # ENCABEZADO AZUL CON LOGO Y TÍTULO
 st.markdown("""
-    <div style="background-color: #003087; padding: 15px; border-radius: 8px; display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Medtronic_logo.svg/320px-Medtronic_logo.svg.png" width="80">
-        <h5 style="color: white; margin: 0;">{tipo_operacion} – Registro de Equipos</h5>
+    <div style="background-color: #003087; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Medtronic_logo.svg/320px-Medtronic_logo.svg.png" width="80">
+            <div>
+                <h3 style="color: white; margin: 0; font-weight: 300;">{tipo_operacion} – Registro de Equipos</h3>
+                <p style="color: white; font-size: 12px; margin: 0; font-weight: 300;">
+                    Información confidencial – uso exclusivo de Medtronic
+                </p>
+            </div>
+        </div>
     </div>
 """.format(tipo_operacion=st.session_state.tipo_operacion), unsafe_allow_html=True)
 
