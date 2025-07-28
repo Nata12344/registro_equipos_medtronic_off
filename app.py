@@ -70,7 +70,7 @@ with st.sidebar:
 # TÍTULO CENTRAL
 # ENCABEZADO AZUL CON LOGO Y TÍTULO
 st.markdown("""
-    <div style="background-color: #003087; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+    <div style="background-color: #003087; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
         <div style="display: flex; align-items: center; gap: 20px;">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Medtronic_logo.svg/320px-Medtronic_logo.svg.png" width="80">
             <div>
