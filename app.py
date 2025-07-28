@@ -233,6 +233,7 @@ if st.button("Enviar"):
             st.session_state.equipos = []
             st.session_state.cliente = ""
             st.session_state.movimiento = ""
+            st.experimental_rerun()
 
         except Exception as e:
             st.error(f"No se pudo enviar el correo: {e}")
