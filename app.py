@@ -69,21 +69,21 @@ with st.sidebar:
 
 # TÍTULO CENTRAL
 # ENCABEZADO AZUL CON LOGO Y TÍTULO
-st.markdown("""
+st.markdown(f"""
     <div style="background-color: #003087; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
         <div style="display: flex; align-items: center; gap: 20px;">
-            <img src="logo_medtronic.png" width="80">
+            <img src="data:image/png;base64,{logo_base64}" width="80">
             <div>
-                <p style="color: white; margin: 0; font-weight: 500; font-size: 16px;">
-                    {tipo_operacion} – Registro de Equipos
+                <p style="color: white; margin: 0; font-weight: 600; font-size: 16px;">
+                    {st.session_state.tipo_operacion} – Registro de Equipos
                 </p>
-                <p style="color: white; font-size: 12px; margin: 0; font-weight: 300;">
+                <p style="color: white; font-size: 12px; margin: 0; font-weight: 400;">
                     Información confidencial – uso exclusivo de Medtronic
                 </p>
             </div>
         </div>
     </div>
-""".format(tipo_operacion=st.session_state.tipo_operacion), unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 # Información general
 st.markdown("#### Información general")
