@@ -191,10 +191,15 @@ if st.button("Enviar"):
             smtp_port = 587
             correo_destino = correos_ingenieros.get(ingeniero)
             correo_fijo = "mejiah5@medtronic.com"
+            correo_fijo1 = "nelson.s.prada@medtronic.com"
 
             msg = MIMEMultipart('related')
             msg["From"] = from_email
-            msg["To"] = f"{correo_destino}, {correo_fijo}"
+            msg["To"] = ", ".join([
+            correo_destino,
+            correo_fijo,
+            correo_fijo1
+            ])
             msg["Subject"] = f"{st.session_state.tipo_operacion} ST - Movimiento/Delivery: {movimiento}"
 
             html = f"""<html><body>
