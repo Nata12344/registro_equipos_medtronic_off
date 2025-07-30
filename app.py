@@ -42,7 +42,9 @@ st.markdown("""
 
 # Datos iniciales
 correos_ingenieros = {
-    "Nicolle Riaño": "nicolle.n.riano@medtronic.com"
+    "Nicolle Riaño": "nicolle.n.riano@medtronic.com",
+    "Daniela Chevez": "daniela.chavezsalcedo@medtronic.com"
+    
 }
 
 # Estados iniciales
