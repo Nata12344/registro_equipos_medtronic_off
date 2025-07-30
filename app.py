@@ -56,7 +56,8 @@ correos_ingenieros = {
     "Jhon Solarte": "john.c.solarte@medtronic.com",
     "Sergio Rueda": "sergio.a.rueda@medtronic.com",
     "Andres Padilla": "andres.f.padilla@medtronic.com",
-    "Elsa Ibanez": "elsa.m.ibanez@medtronic.com"
+    "Elsa Ibanez": "elsa.m.ibanez@medtronic.com",
+    "Nicolle": "nicolle.n.riano@medtronic.com"
 }
 
 # Estados iniciales
