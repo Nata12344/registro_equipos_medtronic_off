@@ -190,7 +190,7 @@ if st.button("Enviar"):
             smtp_server = "smtp.gmail.com"
             smtp_port = 587
             correo_destino = correos_ingenieros.get(ingeniero)
-            correo_fijo = "mejiah5@medtronic.com", "nelson.s.prada@medtronic.com"
+            correo_fijo = "mejiah5@medtronic.com"
 
             msg = MIMEMultipart('related')
             msg["From"] = from_email
