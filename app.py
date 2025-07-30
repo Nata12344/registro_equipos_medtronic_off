@@ -42,9 +42,21 @@ st.markdown("""
 
 # Datos iniciales
 correos_ingenieros = {
-    "Nicolle Riaño": "nicolle.n.riano@medtronic.com",
-    "Daniela Chevez": "daniela.chavezsalcedo@medtronic.com"
-    
+    "Daniela Chavez": "daniela.chavezsalcedo@medtronic.com",
+    "Diego Mateus": "diego.r.mateus@medtronic.com",
+    "Margarita Ramirez": "margarita.m.ramirez@medtronic.com",
+    "Ana Herrera": "ana.m.herreratorres@medtronic.com",
+    "Diana Garcia": "diana.m.garcia@medtronic.com",
+    "Jessica Cely": "jessica.d.celycastro@medtronic.com",
+    "Camila Bernal": "camila.a.bernal@medtronic.com",
+    "Daniel Sanchez": "daniel.e.sanchez3@medtronic.com",
+    "Carlos Echeverria": "carlos.j.echeverria@medtronic.com",
+    "Daniel Jaramillo": "daniel.jaramillo@medtronic.com",
+    "Jorge Torres": "jorge.torres5@medtronic.com",
+    "Jhon Solarte": "john.c.solarte@medtronic.com",
+    "Sergio Rueda": "sergio.a.rueda@medtronic.com",
+    "Andres Padilla": "andres.f.padilla@medtronic.com",
+    "Elsa Ibanez": "elsa.m.ibanez@medtronic.com"
 }
 
 # Estados iniciales
@@ -177,7 +189,7 @@ if st.button("Enviar"):
             smtp_server = "smtp.gmail.com"
             smtp_port = 587
             correo_destino = correos_ingenieros.get(ingeniero)
-            correo_fijo = "mejiah5@medtronic.com"
+            correo_fijo = "mejiah5@medtronic.com", "nelson.s.prada@medtronic.com"
 
             msg = MIMEMultipart('related')
             msg["From"] = from_email
