@@ -117,6 +117,18 @@ cliente = st.text_input("Cliente:", value=st.session_state.cliente)
 ingeniero = st.selectbox("Ingeniero:", list(correos_ingenieros.keys()), index=0)
 movimiento = st.text_input("Movimiento / Delivery:", value=st.session_state.movimiento)
 
+# Lista de posibles personas que registran el movimiento
+personas_responsables = [
+    "Nicolle Riaño", "Nelson Prada", "Diego Mateus", "Jessica Cely", "Camila Bernal", "Diana Garcia", "Otro"
+]
+
+# Mostrar el campo según el tipo de operación
+if st.session_state.tipo_operacion == "Ingreso":
+    registrado_por = st.selectbox("Ingresado por:", personas_responsables)
+else:
+    registrado_por = st.selectbox("Salida por:", personas_responsables)
+
+
 st.session_state.cliente = cliente
 st.session_state.movimiento = movimiento
 
@@ -207,6 +219,7 @@ if st.button("Enviar"):
             <p><b>Cliente:</b> {cliente}<br>
             <b>Ingeniero:</b> {ingeniero}<br>
             <b>Movimiento / Delivery:</b> {movimiento}</p>
+            <b>{'Ingresado' if st.session_state.tipo_operacion == 'Ingreso' else 'Salida'} por:</b> {registrado_por}</p>
             <p><b>Equipos registrados:</b></p>
             """
 
