@@ -119,7 +119,7 @@ movimiento = st.text_input("Movimiento / Delivery:", value=st.session_state.movi
 
 # Lista de posibles personas que registran el movimiento
 personas_responsables = [
-    "Nicolle Riaño", "Nelson Prada", "Diego Mateus", "Jessica Cely", "Camila Bernal", "Diana Garcia", "Otro"
+     "Nelson Prada", "Dylan Rozo", "Harold Zambrano", "Daniela chavez", "Diego Mateus", "Margarita Ramirez", "Ana Herrera"
 ]
 
 # Mostrar el campo según el tipo de operación
